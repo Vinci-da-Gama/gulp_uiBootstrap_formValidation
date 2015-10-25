@@ -1,0 +1,20 @@
+<div class="form-group">
+    <label>Popup Title:</label>
+    <input type="text" ng-model="dyPopover.title" class="form-control">
+</div>
+<div class="form-group">
+	<label for="input-text-for-popover">input-text-for-popover</label>
+	<input type="text" class="form-control" id="input-text-for-popover" ng-model="dyPopover.inputTemplate" placeholder="Input field">
+</div>
+<button type="button" class="btn btn-info" uib-popover-template="dyPopover.inputTemplate" popover-title="{{dyPopover.title}}">popover the content you input...</button>
+<hr>
+<button popover-placement="top" uib-popover="On The Top..." type="button" class="btn btn-warning">Top</button>
+<button popover-placement="bottom" uib-popover="On The Bottom..." type="button" class="btn btn-warning">Bottom</button>
+<button popover-placement="left" uib-popover="On The Left..." type="button" class="btn btn-warning">Left</button>
+<button popover-placement="right" uib-popover="On The Right..." type="button" class="btn btn-warning">Right</button>
+<hr>
+<pre>trigger-popove | </pre>
+<button type="button" class="btn btn-success" uib-popover="I appeared on mouse enter!" popover-trigger="mouseover">mouse-over trigger popover</button>
+
+<input uib-popover="This is focus popover trigger..." popover-trigger="focus" type="text" name="triggerFocus" id="inputTriggerFocus" class="form-control" value="triggerFocus" required="required">
+<button type="button" class="btn btn-danger" uib-popover="popover fade animation with title" popover-animation="true" popover-title="This is popover_title" popover-trigger="focus">popover fade animation with title</button>

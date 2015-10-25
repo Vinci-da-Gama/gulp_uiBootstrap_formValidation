@@ -1,0 +1,92 @@
+<div class="panel panel-danger">
+	<div class="panel-heading">
+		<h3 class="panel-title" ng-bind="tn.p1Title"></h3>
+		<br>
+		<button type="button" class="btn btn-primary" ui-sref="p2">Go P2</button>
+	</div>
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-sm-3 text-primary">{{tn.p1Accordion}}:</div>
+			<div class="col-sm-9">
+				<uibs-accordion></uibs-accordion>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3 text-primary">{{tn.p1Botton}}:</div>
+			<div class="col-sm-9">
+				<uibs-buttons></uibs-buttons>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3 text-primary">{{tn.p1Carousel}}:</div>
+			<div class="col-sm-9">
+				<uibs-carousel></uibs-carousel>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3 text-primary">{{tn.p1Collapse}}:</div>
+			<div class="col-sm-9">
+				<uibs-collapse></uibs-collapse>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3 text-primary">{{tn.p1Datepicker}}:</div>
+			<div class="col-sm-9">
+				<uibs-datepicker></uibs-datepicker>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-sm-3 text-primary">{{tn.p1DropDown}}:</div>
+			<div class="col-sm-9">
+				<uibs-dropdown></uibs-dropdown>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3 text-primary">{{tn.p1Modal}}:</div>
+			<div class="col-sm-9" ng-controller="modalCtrl">
+
+				<button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+				<button type="button" class="btn btn-default" ng-click="toggleAnimation()">Toggle Animation ({{ animationsEnabled }})</button>
+
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-sm-3 text-primary">{{tn.p1PopOver}}:</div>
+			<div class="col-sm-9">
+				<uibs-popover></uibs-popover>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3 text-primary">{{tn.p1Progressbar}}:</div>
+			<div class="col-sm-9">
+				<uibs-progressbar></uibs-progressbar>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3 text-primary">{{tn.p1Rating}}:</div>
+			<div class="col-sm-9">
+				<uibs-rating></uibs-rating>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3 text-primary">{{tn.p1Tabs}}:</div>
+			<div class="col-sm-9">
+				<uibs-tabs></uibs-tabs>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3 text-primary">{{tn.p1Timepicker}}:</div>
+			<div class="col-sm-9">
+				<uibs-timepicker></uibs-timepicker>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-3 text-primary">{{tn.p1Typeahead}}:</div>
+			<div class="col-sm-9">
+				<uibs-typeahead></uibs-typeahead>
+			</div>
+		</div>
+	</div>
+</div>
