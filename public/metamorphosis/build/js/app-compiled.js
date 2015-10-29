@@ -4,6 +4,7 @@
 	var cons = ['uibfv.constant', 'uibfv.uiconstant'];
 	var ser = ['uibfv.sig.service', 'uibfv.service'];
 	var dir = ['uibfv.dir', 'uibfv.cust.dir', 'uibfv.uibpopoverandlast6.dir'];
+	var custModules = ['uibfv.requirengmodol.dir'];
 
 	var depedencyArr = angu.concat(routerCtrl, cons, ser, dir);
 
@@ -18,6 +19,8 @@
 	angular.module('uibfv.dir', ['uibfv.service', 'uibfv.sig.service']);
 	angular.module('uibfv.cust.dir', ['uibfv.service', 'uibfv.sig.service']);
 	angular.module('uibfv.uibpopoverandlast6.dir', ['uibfv.service', 'uibfv.sig.service']);
+
+	angular.module('uibfv.requirengmodol.dir', ['uibfv.service', 'uibfv.sig.service']);
 
 })();
 (function () {
@@ -34,8 +37,22 @@
 		})
 		.state('p2', {
 			url: '/p2',
-			templateUrl: './partials/p2.html',
-			controller: 'p2Ctrl'
+			views: {
+				'': {
+					templateUrl: './partials/p2.html',
+					controller: 'p2Ctrl'
+				},
+				// parallel view can share same ctrl...
+				"leftForm@p2": {
+					templateUrl: './partials/p2/p2-leftform.html',
+					controller: 'p2Ctrl'
+				},
+				"rightForm@p2": {
+					templateUrl: './partials/p2/p2-rightform.html',
+					controller: 'p2Ctrl'
+				}
+
+			}
 		});
 
 	}]);
@@ -83,81 +100,6 @@
 		dollar: String.fromCharCode(36)
 	});
 
-
-})();
-(function () {
-	var ctrlM = angular.module('uibfv.ctrl');
-
-	ctrlM.controller('p1Ctrl', ['$scope', '$log', 'titleAndNotes', function($scope, $log, titleAndNotes){
-		$log.log("This is p1Ctrl...");
-		var cs = $scope;
-
-		cs.tn = titleAndNotes;
-
-	}]);
-
-	ctrlM.controller('p2Ctrl', ['$scope', '$log', 'titleAndNotes', function($scope, $log, titleAndNotes){
-		$log.log("This is p2Ctrl...");
-	}]);
-	
-
-	ctrlM.controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance', 'items', function($scope, $uibModalInstance, items){
-		$scope.items = items;
-		console.log('$scope.items --> ', $scope.items);
-		$scope.selected = {item: $scope.items[0]};
-
-		$scope.ok = function () {
-		    $uibModalInstance.close($scope.selected.item);
-		};
-
-		$scope.cancel = function () {
-		    $uibModalInstance.dismiss('cancel');
-		};
-	}]);
-
-	ctrlM.controller('modalCtrl', ['$scope', '$uibModal', '$log', function($scope, $uibModal, $log){
-
-		$scope.items = ['item1', 'item2', 'item3'];
-		$scope.animationsEnabled = true;
-
-		$scope.open = function (size) {
-
-			var modalInstance = $uibModal.open({
-				animation: $scope.animationsEnabled,
-				templateUrl: './partials/p1/uibs-modal-tmpl.html',
-				controller: 'ModalInstanceCtrl',
-				size: size,
-				resolve: {
-					items: function () {
-						return $scope.items;
-					}
-				}
-			});
-
-			modalInstance.result.then(function (selectedItem) {
-				$scope.selected = selectedItem;
-			}, function () {
-				$log.info('Modal dismissed at: ' + new Date());
-			});
-		};
-
-		$scope.toggleAnimation = function () {
-			$scope.animationsEnabled = !$scope.animationsEnabled;
-		};
-
-	}]);
-
-})();
-(function () {
-	var mdM = angular.module('uibfv.ctrl');
-
-	
-
-})();
-(function () {
-	var dM = angular.module('uibfv.dir');
-
-	// dM
 
 })();
 (function () {
@@ -441,6 +383,95 @@ cdM.directive('uibsDatepicker', [function(){
 
 })();
 (function () {
+	var p2lM = angular.module('uibfv.cust.dir');
+
+	p2lM.directive('ngmodelRequire', [function(){
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			// controller: function($scope, $element, $attrs, $transclude) {},
+			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			templateUrl: './partials/p2/ngModel-req1.html',
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			// link: function($scope, iElm, iAttrs, controller) {}
+		};
+	}]);
+
+	p2lM.directive('validateOverwriteEmail', [function(){
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			// controller: function($scope, $element, $attrs, $transclude) {},
+			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			templateUrl: './partials/p2/validate-overwrite-email.html',
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			link: function($scope, iElm, iAttrs, controller) {}
+		};
+	}]);
+
+	p2lM.directive('validateUsernameInteger', [function(){
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			// controller: function($scope, $element, $attrs, $transclude) {},
+			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			templateUrl: './partials/p2/validate-username-integer.html'
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			// link: function($scope, iElm, iAttrs, controller) {}
+		};
+	}]);
+
+	p2lM.directive('validInvalidDirtyPristine', [function(){
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			controller: function($scope, $element, $attrs, $transclude) {
+				$scope.user = "wo cao";
+				$scope.email = "wo.cao@gmail.com";
+				$scope.emailDefault = "gannima+3@xxoo.com";
+				// $scope.EMAIL_REGEX = /^[A-Za-z0-9._%+-']+@[A-Za-z0-9.-]+.[A-Za-z]{2,4}$/;
+				// $scope.EMAIL_REGEX = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i;
+				$scope.EMAIL_REGEX = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+				$scope.tellValid = function () {
+					alert('It is valided...');
+				};
+			},
+			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			templateUrl: './partials/p2/valid-invalid-dirty-pristine.html'
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			// link: function($scope, iElm, iAttrs, controller) {}
+		};
+	}]);
+
+	p2lM.directive('simpleSignupForm', [function(){
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			controller: function($scope, $element, $attrs, $transclude) {},
+			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			templateUrl: './partials/p2/simple-signup-form.html'
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			// link: function($scope, iElm, iAttrs, controller) {}
+		};
+	}]);
+
+})();
+(function () {
 	var l6M = angular.module('uibfv.uibpopoverandlast6.dir');
 
 	l6M.directive('uibsPopover', [function(){
@@ -651,30 +682,205 @@ cdM.directive('uibsDatepicker', [function(){
 	}]);
 
 })();
-// service js Document
-// $log.log("sigSrevice error line -- 14 --- data : "+data+" config: "+config+" status: "+status+".---");
-/*sigM.service('inquireInfo', ['$http', '$log', 'appnameDb', function($http, $log, appnameDb){
-	var dbPath = appnameDb.dbDot+appnameDb.delimiter+appnameDb.dbPrefix+appnameDb.delimiter+appnameDb.dbName+appnameDb.dbExtension;
-
-	this.obtainDossier = function (func) {
-		$http.get(dbPath)
-		.then(function (testimony) {
-			func(testimony.data);
-			$log.log('get data successfully. '+dbPath);
-		})
-		.catch(function (data, config, status) {
-			$log.log("sigSrevice error line -- 16 -\&\#1046\;- data : "+data+" config: "+config+" status: "+status+".---");
-		})
-		.finally(function () {
-			$log.log('sigSrevice line 19, finally method.');
-		});
-	};
-
-}]);*/
 (function () {
-	var ssM = angular.module('uibfv.sig.service');
+	var ctrlM = angular.module('uibfv.ctrl');
 
-	// ssM
+	ctrlM.controller('p1Ctrl', ['$scope', '$log', 'titleAndNotes', function($scope, $log, titleAndNotes){
+		$log.log("This is p1Ctrl...");
+		var cs = $scope;
+
+		cs.tn = titleAndNotes;
+
+	}]);
+
+	ctrlM.controller('p2Ctrl', ['$scope', '$log', 'titleAndNotes', function($scope, $log, titleAndNotes){
+		$log.log("This is p2Ctrl...");
+		$scope.thisPage = "This is page 2";
+		$scope.groups = [
+			{title: "Unmodified form ($pristine)", content: "formName.inputFieldName.$pristine (return value: true/false -- true: if the input hasn't been touched, false if it has.)"},
+			{title: "Modified form ($dirty)", content: "formName.inputFieldName.$dirty (return value: true/false -- true: if the input has been modified, false if it hasn't.) -- regardless validation."},
+			{title: "blurred form ($touched)", content: "formName.inputFieldName.$touched (return value: true/false -- True if item has been blurred, false if it is not.)"},
+			{title: "validate form ($valid)", content: "formName.inputFieldName.$valid (return value: true/false -- true: if the input value is valided, false if it is not valided.)"},
+			{title: "invalid form ($invalid)", content: "formName.inputFieldName.$invalid (return value: true/false -- true: if the input value is invalid, false if it is valid.)"},
+			{title: "Whether submit form ($submitted)", content: "formName.inputFieldName.$submitted (return value: true/false -- True if user has submitted the form even if its invalid.)"},
+			{title: "Collected All Validations in form ($error)", content: "formName.inputFieldName.$error (return value: true/false -- This object contains all of the validations on a particular form. If all of them is valid, then return true. Otherwise, return false.)"}];
+	}]);
+	
+
+	ctrlM.controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance', 'items', function($scope, $uibModalInstance, items){
+		$scope.items = items;
+		console.log('$scope.items --> ', $scope.items);
+		$scope.selected = {item: $scope.items[0]};
+
+		$scope.ok = function () {
+		    $uibModalInstance.close($scope.selected.item);
+		};
+
+		$scope.cancel = function () {
+		    $uibModalInstance.dismiss('cancel');
+		};
+	}]);
+
+	ctrlM.controller('modalCtrl', ['$scope', '$uibModal', '$log', function($scope, $uibModal, $log){
+
+		$scope.items = ['item1', 'item2', 'item3'];
+		$scope.animationsEnabled = true;
+
+		$scope.open = function (size) {
+
+			var modalInstance = $uibModal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: './partials/p1/uibs-modal-tmpl.html',
+				controller: 'ModalInstanceCtrl',
+				size: size,
+				resolve: {
+					items: function () {
+						return $scope.items;
+					}
+				}
+			});
+
+			modalInstance.result.then(function (selectedItem) {
+				$scope.selected = selectedItem;
+			}, function () {
+				$log.info('Modal dismissed at: ' + new Date());
+			});
+		};
+
+		$scope.toggleAnimation = function () {
+			$scope.animationsEnabled = !$scope.animationsEnabled;
+		};
+
+	}]);
+
+})();
+(function () {
+	var mdM = angular.module('uibfv.ctrl');
+
+	
+
+})();
+(function () {
+	var dM = angular.module('uibfv.dir');
+
+	dM.directive('overwriteEmail', [function(){
+		var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@example\.com$/i;
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			// controller: function($scope, $element, $attrs, $transclude) {},
+			require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'A', //can be empty... // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			// templateUrl: '',
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			link: function($scope, iElm, iAttrs, ctrl) {
+				// only ngModel has validator for email (like $error);
+				if (ctrl && ctrl.$validators.email) {
+					ctrl.$validators.email = function (modelValue) {
+						return ctrl.$isEmpty(modelValue) || EMAIL_REGEXP.test(modelValue);
+					};
+				}
+			}
+		};
+	}]);
+
+	dM.directive('integerValidate', [function(){
+		var INTEGER_REGEXP = /^\-?\d+$/;
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			// controller: function($scope, $element, $attrs, $transclude) {},
+			require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			// templateUrl: '',
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			link: function($scope, iElm, iAttrs, ctrl) {
+				ctrl.$validators.cao = function (modelValue, viewValue) {
+					if (ctrl.$isEmpty(modelValue)) {
+						// empty model value is valid... (people can write nothing...)
+						return true;
+					}
+					if (INTEGER_REGEXP.test(viewValue)) {
+						return true;
+					}
+					return false;
+				};
+			}
+		};
+	}]);
+
+	dM.directive('usernameValidate', ['$q', '$timeout', function($q, $timeout){
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			// controller: function($scope, $element, $attrs, $transclude) {},
+			require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			// templateUrl: '',
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			link: function($scope, iElm, iAttrs, ctrl) {
+				var usernames = ['Jim', 'John', 'Jill', 'Jackie'];
+
+				ctrl.$asyncValidators.ganName = function (modelValue, viewValue) {
+					if (ctrl.$isEmpty(modelValue)) {
+				        // consider empty model valid
+				         return $q.when();
+			        }
+
+			        var def = $q.defer();
+
+			        $timeout(function() {
+			          	// Mock a delayed response
+			          	if (usernames.indexOf(modelValue) === -1) {
+			            	// The username is available
+			            	def.resolve();
+			          	} else {
+			            	def.reject();
+			          	}
+
+			        }, 2000);
+
+			        return def.promise;
+				};
+			}
+		};
+	}]);
+
+})();
+(function () {
+	var mrM = angular.module('uibfv.requirengmodol.dir');
+
+	mrM.directive('contenteditable', [function(){
+		return {
+			// scope: {}, // {} = isolate, true = child, false/undefined = no change
+			// controller: function($scope, $element, $attrs, $transclude) {},
+			require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			// restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			// templateUrl: '',
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			link: function($scope, iElm, iAttrs, ctrl) {
+
+				iElm.on('blur', function() {
+					ctrl.$setViewValue(iElm.html());
+				});
+
+				ctrl.$render = function () {
+					iElm.html(ctrl.$viewValue);
+				};
+
+				ctrl.$setViewValue(iElm.html());
+			}
+		};
+	}]);
 
 })();
 // service js Document
@@ -721,6 +927,32 @@ cdM.directive('uibsDatepicker', [function(){
 	var sM = angular.module('uibfv.service');
 
 	// sM
+
+})();
+// service js Document
+// $log.log("sigSrevice error line -- 14 --- data : "+data+" config: "+config+" status: "+status+".---");
+/*sigM.service('inquireInfo', ['$http', '$log', 'appnameDb', function($http, $log, appnameDb){
+	var dbPath = appnameDb.dbDot+appnameDb.delimiter+appnameDb.dbPrefix+appnameDb.delimiter+appnameDb.dbName+appnameDb.dbExtension;
+
+	this.obtainDossier = function (func) {
+		$http.get(dbPath)
+		.then(function (testimony) {
+			func(testimony.data);
+			$log.log('get data successfully. '+dbPath);
+		})
+		.catch(function (data, config, status) {
+			$log.log("sigSrevice error line -- 16 -\&\#1046\;- data : "+data+" config: "+config+" status: "+status+".---");
+		})
+		.finally(function () {
+			$log.log('sigSrevice line 19, finally method.');
+		});
+	};
+
+}]);*/
+(function () {
+	var ssM = angular.module('uibfv.sig.service');
+
+	// ssM
 
 })();
 // jQuery Js Document

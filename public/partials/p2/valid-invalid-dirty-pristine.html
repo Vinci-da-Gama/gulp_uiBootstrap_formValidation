@@ -1,0 +1,35 @@
+<form name="validInvalidPristineDirty" novalidate>
+	<legend>This Form: practice $valid_$invalid_$pristine_$dirty</legend>
+	<p>ng-show need formname: validInvalidPristineDirty -- every input need its name</p>
+	<div class="form-group">
+		<label for="userName">UserName:</label>
+		<input type="text" name="userInput" class="form-control" id="userName" ng-model="user" placeholder="UserName..." required>
+		<span style="color: red;" ng-show="validInvalidPristineDirty.userInput.$dirty && validInvalidPristineDirty.userInput.$invalid">
+			<span ng-show="validInvalidPristineDirty.userInput.$error.required">Username is required.</span>
+		</span>
+	</div>
+
+	<div class="form-group">
+		<label for="theEmail">Email:</label>
+		<input type="email" name="emailInput" class="form-control" id="theEmail" ng-model="email" placeholder="email..." required>
+		<span style="color: red;" ng-show="validInvalidPristineDirty.emailInput.$dirty && validInvalidPristineDirty.emailInput.$invalid">
+			<span ng-show="validInvalidPristineDirty.emailInput.$error.required">Email is required.</span>
+			<!-- format is :-:> formName.inputName.$error.(modelName || attributeValue). -->
+			<!-- this email must be same email as the email in directive... -->
+			<span ng-show="validInvalidPristineDirty.emailInput.$error.email">Invalid email address.</span>
+		</span>
+	</div>
+
+	<div class="form-group">
+		<label for="eamilPattern">Email ng-pattern:</label>
+		<input type="email" name="email_Pattern" class="form-control" id="eamilPattern" ng-model="emailDefault" ng-pattern="EMAIL_REGEX" placeholder="email pattern: Pear'lpeerh.shin@xyz.com" required>
+		<span style="color: red;" ng-show="validInvalidPristineDirty.email_Pattern.$dirty && validInvalidPristineDirty.email_Pattern.$invalid">
+			<span ng-show="validInvalidPristineDirty.email_Pattern.$error.required">Email is required.</span>
+			<!-- format is :-:> formName.inputName.$error.(modelName || attributeValue). -->
+			<!-- this email compare with pattern -->
+			<span ng-show="validInvalidPristineDirty.email_Pattern.$error.pattern">Invalid email address.</span>
+		</span>
+	</div>
+
+	<button type="submit" class="btn btn-primary" ng-disabled="validInvalidPristineDirty.userInput.$dirty && validInvalidPristineDirty.userInput.$invalid || validInvalidPristineDirty.emailInput.$dirty && validInvalidPristineDirty.emailInput.$invalid || validInvalidPristineDirty.email_Pattern.$dirty && validInvalidPristineDirty.email_Pattern.$invalid" ng-click="tellValid()">Check</button>
+</form>

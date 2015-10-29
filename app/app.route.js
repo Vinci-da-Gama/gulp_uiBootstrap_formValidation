@@ -12,8 +12,22 @@
 		})
 		.state('p2', {
 			url: '/p2',
-			templateUrl: './partials/p2.html',
-			controller: 'p2Ctrl'
+			views: {
+				'': {
+					templateUrl: './partials/p2.html',
+					controller: 'p2Ctrl'
+				},
+				// parallel view can share same ctrl...
+				"leftForm@p2": {
+					templateUrl: './partials/p2/p2-leftform.html',
+					controller: 'p2Ctrl'
+				},
+				"rightForm@p2": {
+					templateUrl: './partials/p2/p2-rightform.html',
+					controller: 'p2Ctrl'
+				}
+
+			}
 		});
 
 	}]);

@@ -11,6 +11,15 @@
 
 	ctrlM.controller('p2Ctrl', ['$scope', '$log', 'titleAndNotes', function($scope, $log, titleAndNotes){
 		$log.log("This is p2Ctrl...");
+		$scope.thisPage = "This is page 2";
+		$scope.groups = [
+			{title: "Unmodified form ($pristine)", content: "formName.inputFieldName.$pristine (return value: true/false -- true: if the input hasn't been touched, false if it has.)"},
+			{title: "Modified form ($dirty)", content: "formName.inputFieldName.$dirty (return value: true/false -- true: if the input has been modified, false if it hasn't.) -- regardless validation."},
+			{title: "blurred form ($touched)", content: "formName.inputFieldName.$touched (return value: true/false -- True if item has been blurred, false if it is not.)"},
+			{title: "validate form ($valid)", content: "formName.inputFieldName.$valid (return value: true/false -- true: if the input value is valided, false if it is not valided.)"},
+			{title: "invalid form ($invalid)", content: "formName.inputFieldName.$invalid (return value: true/false -- true: if the input value is invalid, false if it is valid.)"},
+			{title: "Whether submit form ($submitted)", content: "formName.inputFieldName.$submitted (return value: true/false -- True if user has submitted the form even if its invalid.)"},
+			{title: "Collected All Validations in form ($error)", content: "formName.inputFieldName.$error (return value: true/false -- This object contains all of the validations on a particular form. If all of them is valid, then return true. Otherwise, return false.)"}];
 	}]);
 	
 

@@ -1,0 +1,8 @@
+<form name="form" novalidate>
+	<div>
+		Overwritten Email: If the email is like {{anything}}@example.com, it would be record. Else, it is invalid.
+		<input type="email" ng-model="myEmail" overwrite-email name="overwrittenEmail" />
+		<span ng-show="form.overwrittenEmail.$error.email">This email format is invalid!</span><br>
+		The new Valid Email is : {{myEmail}}
+	</div>
+</form>

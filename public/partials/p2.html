@@ -1,7 +1,27 @@
 <div class="jumbotron">
 	<div class="container">
 		<h1>This is page 2</h1>
-		<p>Contents ...</p>
+		<dl>
+			<dt>Control variables in forms</dt>
+			<dd>Basic Formation</dd>
+			<small>formName.inputFieldName.property</small>
+		</dl>
+		<uib-accordion close-others="true">
+			<uib-accordion-group ng-repeat="group in groups" is-open="status.open">
+				<uib-accordion-heading>
+					{{group.title}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+				</uib-accordion-heading>
+				{{group.content}}
+			</uib-accordion-group>
+		</uib-accordion>
+		<div class="row p2-form">
+			<div class="col-sm-6">
+				<div ui-view="leftForm"></div>
+			</div>
+			<div class="col-sm-6">
+				<div ui-view="rightForm"></div>
+			</div>
+		</div>
 	</div>
 	<button type="button" class="btn btn-info" ui-sref="p1">Go P1</button>
 </div>
