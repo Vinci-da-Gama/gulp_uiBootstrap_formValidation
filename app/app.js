@@ -1,6 +1,6 @@
 (function () {
-	var angu = ['ui.bootstrap', 'ngAnimate', 'mgcrea.ngStrap', 'angularMoment'];
-	var routerCtrl = ['uibfv.router', 'uibfv.ctrl'];
+	var angu = ['ngAnimate', 'mgcrea.ngStrap', 'ngMessages', 'angularMoment', 'validation.match'];
+	var routerCtrl = ['ui.bootstrap', 'uibfv.router', 'uibfv.ctrl'];
 	var cons = ['uibfv.constant', 'uibfv.uiconstant'];
 	var ser = ['uibfv.sig.service', 'uibfv.service'];
 	var dir = ['uibfv.dir', 'uibfv.cust.dir', 'uibfv.uibpopoverandlast6.dir'];

@@ -1,0 +1,78 @@
+<form role="form" novalidate name="mcrform" ng-submit="mcrSubmit(mcrform.$valid)">
+	<hr>
+	<legend>ngMessage -- checkbox -- radio</legend>
+
+	<!-- ng-class="{'has-error': mcrform.name.$invalid && mcrform.name.$pristine}" -->
+	<div class="form-group">
+		<label for="mcr_Name">Name: </label>
+		<input type="text" class="form-control" id="mcr_Name" placeholder="Name..." 
+			ng-minlength="3" ng-maxlength="10"
+			ng-pattern="NAME_REGEX" 
+			name="name" 
+			ng-model="formData.name"
+			required>
+		<div class="help-block" ng-messages="mcrform.name.$error" ng-show="mcrform.name.$touched && mcrform.name.$invalid">
+			<code ng-message="required">Name is required...</code>
+			<ins ng-message="minlength">3...Too short...</ins>
+			<em ng-message="maxlength">10...Too Long...</em>
+			<span ng-message="pattern">Don't fit to the Pattern...</span>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="mcr_Email">Email: </label>
+		<input type="email" class="form-control" id="mcr_Email" placeholder="Email..." 
+			ng-minlength="3" ng-maxlength="16"
+			ng-pattern="EMAIL_REGEX" 
+			name="email" 
+			ng-model="formData.email"
+			required>
+		<div class="help-block" ng-messages="mcrform.email.$error" ng-show="mcrform.email.$touched && mcrform.email.$invalid">
+			<div ng-messages-include="./partials/p2/right/ngMessages.html"></div>
+			<!-- <p ng-message="pattern">Email Not Fit to Pattern...</p> -->
+		</div>
+	</div>
+	
+	<code class="help-block">Favorite Colors (checkbox) true/false</code>
+	<div class="form-group">
+		<label for="Color_Red" class="checkbox-inline">
+			<input type="checkbox" class="form-control" id="Color_Red" name="favoriteColors" ng-model="formData.favoriteColors.red" > Red 
+		</label>
+		<label for="Color_Blue" class="checkbox-inline">
+			<input type="checkbox" class="form-control" id="Color_Blue" name="favoriteColors" ng-model="formData.favoriteColors.blue" > Blue 
+		</label>
+		<label for="Color_Green" class="checkbox-inline">
+			<input type="checkbox" class="form-control" id="Color_Green" name="favoriteColors" ng-model="formData.favoriteColors.green" > Green 
+		</label>
+	</div>
+
+	<!-- CUSTOM VALUE CHECKBOXES -->
+    <label>Personal Question</label>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" name="awesome" ng-model="formData.awesome" ng-true-value="'ofCourse'" ng-false-value="'iWish'">
+            Are you awesome?
+        </label>
+    </div>
+    
+    <!-- RADIO BUTTONS -->
+    <label>Chicken or the Egg?</label>
+    <div class="form-group">
+        <div class="radio">
+            <label>
+                <input type="radio" name="chickenEgg" value="chicken" ng-model="formData.chickenEgg">
+                Chicken
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="chickenEgg" value="egg" ng-model="formData.chickenEgg">
+                Egg
+            </label>
+        </div>
+    </div>
+	
+
+	<button type="submit" class="btn btn-primary" ng-disabled="mcrform.$invalid">mcr_Submit</button>
+</form>
+<span class="badge">{{formData}}</span>

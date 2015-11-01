@@ -74,7 +74,21 @@
 	p2lM.directive('simpleSignupForm', [function(){
 		return {
 			scope: {}, // {} = isolate, true = child, false/undefined = no change
-			controller: function($scope, $element, $attrs, $transclude) {},
+			controller: function($scope, $element, $attrs, $transclude, SignStorage) {
+				$scope.signs = SignStorage;
+				console.log('all Sign --> ', $scope.signs);
+				$scope.astri = $scope.signs.Asterisk;
+				$scope.EMAIL_REGEX = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+
+				$scope.submitted = false;
+				$scope.submitSignUpForm = function() {
+				    if ($scope.signup_form.$valid) {
+				    	console.log('submitSignUpForm');
+				    } else {
+				      	$scope.signup_form.submitted = true;
+				    }
+				};
+			},
 			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
 			restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
 			// template: '',

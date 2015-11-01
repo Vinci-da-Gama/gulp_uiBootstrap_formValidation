@@ -1,0 +1,46 @@
+<div class="well">
+	<ins>The Benefit ng-form (dynamic form) brings to us is ----> It allows every input to be validate individuallly...</ins>
+
+	<form name="form1" role="form" novalidate>
+		<h3 class="text-danger">NOT Dynamic Form</h3>
+
+		<div class="form-group" ng-repeat="fork in forks" ng-class="{'has-error': form1.email.$invalid}">
+			<label for="normal_email">{{fork.name}}</label>
+			<input type="email" class="form-control" id="normal_email" placeholder="Email..."
+				ng-model="fork.email" 
+				name="forkemail" 
+				ng-pattern="EMAIL_REGEX"
+				required />
+			<div data-ng-show="form1.forkemail.$touched && form1.forkemail.$invalid">
+				<code class="help-block" data-ng-show="form1.forkemail.$error.required">Fork Email is required...</code>
+				<ins class="help-block" data-ng-show="form1.forkemail.$error.pattern">Not Matched Pattern...</ins>
+			</div>
+		</div>
+	
+		<button type="submit" class="btn btn-danger" ng-disabled="form1.$invalid">Form1_Submit</button>
+	</form>
+
+	<form name="form2" novalidate role="form">
+		<h3 class="text-success">Dynamic Form</h3>
+	  
+		<div class="form-group" bvcxng-class="'has-error': userFieldForm.personemail.$invalid" ng-repeat="person in persons">
+			<ng-form name="userFieldForm">
+				<label for="Person_Email">{{person.name}}</label>
+				<input type="email" class="form-control" id="Person_Email" placeholder="Email..." 
+					ng-model="person.email"
+					name="personemail" 
+					ng-pattern="EMAIL_REGEX"
+					required />
+				<div ng-show="userFieldForm.personemail.$touched && userFieldForm.personemail.$invalid">
+					<code ng-show="userFieldForm.personemail.$error.required">Your Email Required >>> </code>
+					<ins ng-show="userFieldForm.personemail.$error.pattern">Not Fit to Pattern...(ins tag) </ins>
+				</div>
+			</ng-form>
+		</div>
+	
+		<!-- <button type="submit" class="btn btn-success" ng-disabled="userFieldForm.$invalid">Form2_Submit</button> -->
+	</form>
+	<pre>
+		<code class="text-success">{{persons}}</code>
+	</pre>
+</div>

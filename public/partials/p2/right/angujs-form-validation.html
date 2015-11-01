@@ -1,0 +1,21 @@
+<form role="form" novalidate name="avfform" ng-submit="afvSubmit(avfform.$valid)">
+	<legend>A quick form for $valid</legend>
+
+	<div class="form-group" ng-class="{'has': avfform.name.$invalid || avfform.name.$pristine}">
+		<label for="afv_Name">Name: </label>
+		<input type="text" class="form-control" id="afv_Name" placeholder="Name..." 
+			name="name" 
+			ng-model="user.name"
+			ng-minlength=3 ng-maxlength=10 
+			ng-pattern="NAME_REGEX"
+			required />
+		<div data-ng-show="avfform.name.$invalid && avfform.name.$touched">
+			<code ng-show="avfform.name.$error.required">Name is required...</code>
+			<ins ng-show="avfform.name.$error.minlength">Not Less Than 3 letters...</ins>
+			<em ng-show="avfform.name.$error.maxlenghth">Not More Than 10 Letters...</em>
+			<wbr ng-show="avfform.name.$error.pattern">Name only need letters...</wbr>
+		</div>
+	</div>
+
+	<button type="submit" class="btn btn-primary" ng-disabled="avfform.$invalid">avf_Submit</button>
+</form>

@@ -1,0 +1,54 @@
+<form name="signup_form" novalidate ng-submit="submitSignUpForm()" role="form">
+	<legend>Simple Sign_Up Form</legend>
+
+	<div class="form-group row">
+		<label for="signup_name"><strong style="color:MediumTurquoise;">{{astri}}</strong><cite> Name:</cite></label>
+		<input type="text" class="form-control" name="name" id="signup_name" placeholder="Name..." ng-model="signup.name" ng-minlength=3 ng-maxlength=10 required />
+		<div style="color:red;" ng-show="signup_form.name.$dirty && signup_form.name.$invalid">
+			<small ng-show="signup_form.name.$error.required">(small tag) Your name is required...</small>
+			<dfn ng-show="signup_form.name.$error.minlength">(dfn tag) At least 3 letters</dfn>
+			<code ng-show="signup_form.name.$error.maxlength">(code tag) Not more than 10 letters...</code>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<s>s Tag</s>
+		<br />
+		<del>del Tag</del>
+		<em>em tag</em> 
+		<strong>strong tag</strong> 
+		<label for="signup_email"><em style="color:red; font-size:20px;">{{astri}}</em><kbd>(kbd tag) Email With Pattern:</kbd></label>
+		<input type="email" class="form-control" id="signup_email" placeholder="Email..." 
+			name="email" 
+			ng-model="signup.email" 
+			ng-minlength=3 ng-maxlength=16
+			ng-pattern="EMAIL_REGEX" 
+			required />
+		<div style="color:red;" ng-show="signup_form.email.$dirty && signup_form.email.$invalid">
+			<ins ng-show="signup_form.email.$error.required">(ins tag) Your email is required...</ins>
+			<legend ng-show="signup_form.email.$error.minlength">(legend tag) At least 3 letters</legend>
+			<mark ng-show="signup_form.email.$error.maxlength">(mark tag) Not more than 16 letters...</mark>
+			<samp ng-show="signup_form.email.$error.pattern">(samp tag) Not match the pattern...</samp>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="signup_username"><sub style="color:brown;">(sub tag) {{astri}}</sub><sup>(sup tag) unique Username:</sup></label>
+		<input type="text" class="form-control" id="signup_username" placeholder="UserName..." 
+			name="username" 
+			ng-model="signup.username" 
+			ng-minlength=3 ng-maxlength=20 
+			ensure-unique="username" 
+			required />
+		<div style="color:red;" ng-show="signup_form.username.$dirty && signup_form.username.$invalid">
+			<summary ng-show="signup_form.username.$error.required">(summary tag) Your username is required...</summary>
+			<var ng-show="signup_form.username.$error.minlength">(var tag) At least 3 letters</var>
+			<span ng-show="signup_form.username.$error.maxlength">(span tag) Not more<wbr> (wbr tag) than 20 letters</wbr>...</span>
+			<ins ng-show="signup_form.username.$error.unique">(ins tag) Not more than 20 letters...</ins>
+		</div>
+	</div>
+	
+
+	<button type="submit" class="btn btn-primary" ng-disabled="signup_form.$invalid">Submit</button>
+	<!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+</form>

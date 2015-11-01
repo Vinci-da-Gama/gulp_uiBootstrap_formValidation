@@ -1,0 +1,36 @@
+<form name="validate_match_form" novalidate role="form">
+	<legend>Simple Validate Match (Password -- Confirm)</legend>
+
+	<div class="form-group row">
+		<div class="col-sm-12 col-md-12">
+			<label for="Password_Input">Password: </label>
+			<input type="password" class="form-control" id="Password_Input" placeholder="password input..."
+			name="password_1" 
+			ng-model="pw.password" 
+			ng-class="{'ng-invalid': validate_match_form.confirmPassword.$error.match}" 
+			required />
+		</div>
+		<div data-ng-show="validate_match_form.password_1.$dirty && validate_match_form.password_1.$invalid">
+			<code ng-show="validate_match_form.password_1.$error.required">Password is Required...</code>
+		</div>
+
+		<div class="col-sm-12 col-md-12">
+			<label for="pwConfirm">Confirm: </label>
+			<!-- data-match => match the ng-model -->
+			<input type="password" class="form-control" id="pwComfirm" placeholder="confirm password input..."
+				name="confirmPassword" 
+				ng-model="pw.confirm" 
+				data-match="pw.password" required />
+			<div ng-show="validate_match_form.confirmPassword.$dirty && validate_match_form.confirmPassword.$invalid">
+				<ins ng-show="validate_match_form.confirmPassword.$error.required">Confirm Can't be null...</ins>
+			</div>
+		</div>
+		<div ng-show="validate_match_form.confirmPassword.$error.match">Passwords are not matched...</div>
+	</div>
+	<hr />
+	<summary>True => not match |||| False => match</summary>
+    <p>Mis-match? {{validate_match_form.confirmPassword.$error.match}}</p>
+	
+
+	<button type="submit" class="btn btn-primary">Submit</button>
+</form>

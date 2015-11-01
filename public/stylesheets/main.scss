@@ -74,3 +74,21 @@ div.p2-form {
 		border-top: 1px solid rgba(120, 120, 120, .99);
 	}
 }
+
+// validate-form
+div.col-sm-12 {
+	> input.ng-invalid{
+	    border-color: red;
+	}
+}
+
+// dynamic-form
+div.has-error {
+	border-color: MediumTurquoise;
+	// border-color: MediumVioletRed;
+}
+
+// AngularJS Form Validation
+div.has-fv-error {
+	border-color: MediumVioletRed;
+}

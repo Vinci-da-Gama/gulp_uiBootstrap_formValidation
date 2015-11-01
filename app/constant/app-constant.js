@@ -24,4 +24,9 @@
 		p1BottonRadio: "radio_Btn"
 	});
 
+	cosM.constant('SignStorage', {
+		taiqi: String.fromCharCode(9775),
+		Asterisk: String.fromCharCode(42)
+	});
+
 })();
