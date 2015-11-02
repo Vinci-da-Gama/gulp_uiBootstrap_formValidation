@@ -129,6 +129,11 @@
 			{title: "invalid form ($invalid)", content: "formName.inputFieldName.$invalid (return value: true/false -- true: if the input value is invalid, false if it is valid.)"},
 			{title: "Whether submit form ($submitted)", content: "formName.inputFieldName.$submitted (return value: true/false -- True if user has submitted the form even if its invalid.)"},
 			{title: "Collected All Validations in form ($error)", content: "formName.inputFieldName.$error (return value: true/false -- This object contains all of the validations on a particular form. If all of them is valid, then return true. Otherwise, return false.)"}];
+		$scope.fullTimel = new Date(1382086394000);
+		$scope.date = $scope.fullTimel.getDate();
+		$scope.month = $scope.fullTimel.getMonth();
+		$scope.year = $scope.fullTimel.getFullYear();
+		$scope.fullDate = $scope.date+"/"+$scope.month+"/"+$scope.year;
 	}]);
 	
 
@@ -183,229 +188,6 @@
 	var mdM = angular.module('uibfv.ctrl');
 
 	
-
-})();
-(function () {
-	var dM = angular.module('uibfv.dir');
-
-	dM.directive('overwriteEmail', [function(){
-		var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@example\.com$/i;
-		return {
-			scope: {}, // {} = isolate, true = child, false/undefined = no change
-			// controller: function($scope, $element, $attrs, $transclude) {},
-			require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
-			restrict: 'A', //can be empty... // E = Element, A = Attribute, C = Class, M = Comment
-			// template: '',
-			// templateUrl: '',
-			// replace: true,
-			// transclude: true,
-			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-			link: function($scope, iElm, iAttrs, ctrl) {
-				// only ngModel has validator for email (like $error);
-				if (ctrl && ctrl.$validators.email) {
-					ctrl.$validators.email = function (modelValue) {
-						return ctrl.$isEmpty(modelValue) || EMAIL_REGEXP.test(modelValue);
-					};
-				}
-			}
-		};
-	}]);
-
-	dM.directive('integerValidate', [function(){
-		var INTEGER_REGEXP = /^\-?\d+$/;
-		return {
-			scope: {}, // {} = isolate, true = child, false/undefined = no change
-			// controller: function($scope, $element, $attrs, $transclude) {},
-			require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
-			restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
-			// template: '',
-			// templateUrl: '',
-			// replace: true,
-			// transclude: true,
-			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-			link: function($scope, iElm, iAttrs, ctrl) {
-				ctrl.$validators.cao = function (modelValue, viewValue) {
-					if (ctrl.$isEmpty(modelValue)) {
-						// empty model value is valid... (people can write nothing...)
-						return true;
-					}
-					if (INTEGER_REGEXP.test(viewValue)) {
-						return true;
-					}
-					return false;
-				};
-			}
-		};
-	}]);
-
-	dM.directive('usernameValidate', ['$q', '$timeout', function($q, $timeout){
-		return {
-			scope: {}, // {} = isolate, true = child, false/undefined = no change
-			// controller: function($scope, $element, $attrs, $transclude) {},
-			require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
-			restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
-			// template: '',
-			// templateUrl: '',
-			// replace: true,
-			// transclude: true,
-			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-			link: function($scope, iElm, iAttrs, ctrl) {
-				var usernames = ['Jim', 'John', 'Jill', 'Jackie'];
-
-				ctrl.$asyncValidators.ganName = function (modelValue, viewValue) {
-					if (ctrl.$isEmpty(modelValue)) {
-				        // consider empty model valid
-				         return $q.when();
-			        }
-
-			        var def = $q.defer();
-
-			        $timeout(function() {
-			          	// Mock a delayed response
-			          	if (usernames.indexOf(modelValue) === -1) {
-			            	// The username is available
-			            	def.resolve();
-			          	} else {
-			            	def.reject();
-			          	}
-
-			        }, 2000);
-
-			        return def.promise;
-				};
-			}
-		};
-	}]);
-
-	dM.directive('validateMatch', [function(){
-		return {
-			scope: {}, // {} = isolate, true = child, false/undefined = no change
-			controller: function($scope, $element, $attrs, $transclude) {},
-			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
-			restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
-			// template: '',
-			templateUrl: './partials/p2/validate-match.html',
-			/*replace: true,
-			transclude: true,*/
-			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-			link: function($scope, iElm, iAttrs, controller) {}
-		};
-	}]);
-
-	dM.directive('dynamicForm', [function(){
-		return {
-			scope: {}, // {} = isolate, true = child, false/undefined = no change
-			controller: function($scope, $element, $attrs, $transclude) {
-				var cs = $scope;
-				cs.forks = [
-					{name: 'Chris', email: ''},
-					{name: 'Kaka', email: ''}];
-				cs.persons = [
-					{name: 'Yaya', email: ''},
-					{name: 'Meme', email: ''}];
-				cs.EMAIL_REGEX = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-			},
-			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
-			restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
-			// template: '',
-			templateUrl: './partials/p2/right/dynamic-form.html',
-			// replace: true,
-			// transclude: true,
-			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-			link: function($scope, iElm, iAttrs, controller) {}
-		};
-	}]);
-
-	dM.directive('angujsFormValidation', [function(){
-		return {
-			scope: {}, // {} = isolate, true = child, false/undefined = no change
-			controller: function($scope, $element, $attrs, $transclude) {
-				$scope.user = {
-					name: '',
-					email: ''
-				};
-				$scope.NAME_REGEX = /^[a-zA-Z]+$/i;
-				$scope.afvSubmit = function (isValid) {
-					if (isValid) {
-						console.log('promise submit...');
-					} else{
-						console.log('can\'t submit...');
-					}
-				};
-			},
-			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
-			restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
-			// template: '',
-			templateUrl: './partials/p2/right/angujs-form-validation.html',
-			// replace: true,
-			// transclude: true,
-			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-			link: function($scope, iElm, iAttrs, controller) {
-				
-			}
-		};
-	}]);
-
-	dM.directive('ngmessageCheckboxRaido', [function(){
-		return {
-			scope: {}, // {} = isolate, true = child, false/undefined = no change
-			controller: function($scope, $element, $attrs, $transclude) {
-				$scope.NAME_REGEX = /^[a-zA-Z]+$/i;
-				$scope.EMAIL_REGEX = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
-				$scope.formData = {name: "", email: ""};
-
-				$scope.mcrSubmit = function (isValid) {
-					if (isValid) {
-						alert('promise to submit');
-					} else{
-						console.log('can\'t submit...');
-					}
-				};
-			},
-			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
-			restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
-			// template: '',
-			templateUrl: './partials/p2/right/ngmessage-checkbox-raido.html',
-			// replace: true,
-			// transclude: true,
-			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-			link: function($scope, iElm, iAttrs, controller) {
-				
-			}
-		};
-	}]);
-
-
-
-})();
-(function () {
-	var mrM = angular.module('uibfv.requirengmodol.dir');
-
-	mrM.directive('contenteditable', [function(){
-		return {
-			// scope: {}, // {} = isolate, true = child, false/undefined = no change
-			// controller: function($scope, $element, $attrs, $transclude) {},
-			require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
-			// restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
-			// template: '',
-			// templateUrl: '',
-			// replace: true,
-			// transclude: true,
-			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-			link: function($scope, iElm, iAttrs, ctrl) {
-
-				iElm.on('blur', function() {
-					ctrl.$setViewValue(iElm.html());
-				});
-
-				ctrl.$render = function () {
-					iElm.html(ctrl.$viewValue);
-				};
-
-				ctrl.$setViewValue(iElm.html());
-			}
-		};
-	}]);
 
 })();
 (function () {
@@ -1002,6 +784,255 @@ cdM.directive('uibsDatepicker', [function(){
 	}]);
 
 })();
+(function () {
+	var dM = angular.module('uibfv.dir');
+
+	dM.directive('overwriteEmail', [function(){
+		var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@example\.com$/i;
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			// controller: function($scope, $element, $attrs, $transclude) {},
+			require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'A', //can be empty... // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			// templateUrl: '',
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			link: function($scope, iElm, iAttrs, ctrl) {
+				// only ngModel has validator for email (like $error);
+				if (ctrl && ctrl.$validators.email) {
+					ctrl.$validators.email = function (modelValue) {
+						return ctrl.$isEmpty(modelValue) || EMAIL_REGEXP.test(modelValue);
+					};
+				}
+			}
+		};
+	}]);
+
+	dM.directive('integerValidate', [function(){
+		var INTEGER_REGEXP = /^\-?\d+$/;
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			// controller: function($scope, $element, $attrs, $transclude) {},
+			require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			// templateUrl: '',
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			link: function($scope, iElm, iAttrs, ctrl) {
+				ctrl.$validators.cao = function (modelValue, viewValue) {
+					if (ctrl.$isEmpty(modelValue)) {
+						// empty model value is valid... (people can write nothing...)
+						return true;
+					}
+					if (INTEGER_REGEXP.test(viewValue)) {
+						return true;
+					}
+					return false;
+				};
+			}
+		};
+	}]);
+
+	dM.directive('usernameValidate', ['$q', '$timeout', function($q, $timeout){
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			// controller: function($scope, $element, $attrs, $transclude) {},
+			require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			// templateUrl: '',
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			link: function($scope, iElm, iAttrs, ctrl) {
+				var usernames = ['Jim', 'John', 'Jill', 'Jackie'];
+
+				ctrl.$asyncValidators.ganName = function (modelValue, viewValue) {
+					if (ctrl.$isEmpty(modelValue)) {
+				        // consider empty model valid
+				         return $q.when();
+			        }
+
+			        var def = $q.defer();
+
+			        $timeout(function() {
+			          	// Mock a delayed response
+			          	if (usernames.indexOf(modelValue) === -1) {
+			            	// The username is available
+			            	def.resolve();
+			          	} else {
+			            	def.reject();
+			          	}
+
+			        }, 2000);
+
+			        return def.promise;
+				};
+			}
+		};
+	}]);
+
+	dM.directive('validateMatch', [function(){
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			controller: function($scope, $element, $attrs, $transclude) {},
+			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			templateUrl: './partials/p2/validate-match.html',
+			/*replace: true,
+			transclude: true,*/
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			link: function($scope, iElm, iAttrs, controller) {}
+		};
+	}]);
+
+	dM.directive('dynamicForm', [function(){
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			controller: function($scope, $element, $attrs, $transclude) {
+				var cs = $scope;
+				cs.forks = [
+					{name: 'Chris', email: ''},
+					{name: 'Kaka', email: ''}];
+				cs.persons = [
+					{name: 'Yaya', email: ''},
+					{name: 'Meme', email: ''}];
+				cs.EMAIL_REGEX = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+			},
+			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			templateUrl: './partials/p2/right/dynamic-form.html',
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			link: function($scope, iElm, iAttrs, controller) {}
+		};
+	}]);
+
+	dM.directive('angujsFormValidation', [function(){
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			controller: function($scope, $element, $attrs, $transclude) {
+				$scope.user = {
+					name: '',
+					email: ''
+				};
+				$scope.NAME_REGEX = /^[a-zA-Z]+$/i;
+				$scope.afvSubmit = function (isValid) {
+					if (isValid) {
+						console.log('promise submit...');
+					} else{
+						console.log('can\'t submit...');
+					}
+				};
+			},
+			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			templateUrl: './partials/p2/right/angujs-form-validation.html',
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			link: function($scope, iElm, iAttrs, controller) {
+				
+			}
+		};
+	}]);
+
+	dM.directive('ngmessageCheckboxRaido', [function(){
+		return {
+			scope: {}, // {} = isolate, true = child, false/undefined = no change
+			controller: function($scope, $element, $attrs, $transclude) {
+				$scope.NAME_REGEX = /^[a-zA-Z]+$/i;
+				$scope.EMAIL_REGEX = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+				$scope.formData = {name: "", email: ""};
+
+				$scope.mcrSubmit = function (isValid) {
+					if (isValid) {
+						alert('promise to submit');
+					} else{
+						console.log('can\'t submit...');
+					}
+				};
+			},
+			// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			templateUrl: './partials/p2/right/ngmessage-checkbox-raido.html',
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			link: function($scope, iElm, iAttrs, controller) {
+				
+			}
+		};
+	}]);
+
+
+
+})();
+(function () {
+	var mrM = angular.module('uibfv.requirengmodol.dir');
+
+	mrM.directive('contenteditable', [function(){
+		return {
+			// scope: {}, // {} = isolate, true = child, false/undefined = no change
+			// controller: function($scope, $element, $attrs, $transclude) {},
+			require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+			// restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+			// template: '',
+			// templateUrl: '',
+			// replace: true,
+			// transclude: true,
+			// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+			link: function($scope, iElm, iAttrs, ctrl) {
+
+				iElm.on('blur', function() {
+					ctrl.$setViewValue(iElm.html());
+				});
+
+				ctrl.$render = function () {
+					iElm.html(ctrl.$viewValue);
+				};
+
+				ctrl.$setViewValue(iElm.html());
+			}
+		};
+	}]);
+
+})();
+// service js Document
+// $log.log("sigSrevice error line -- 14 --- data : "+data+" config: "+config+" status: "+status+".---");
+/*sigM.service('inquireInfo', ['$http', '$log', 'appnameDb', function($http, $log, appnameDb){
+	var dbPath = appnameDb.dbDot+appnameDb.delimiter+appnameDb.dbPrefix+appnameDb.delimiter+appnameDb.dbName+appnameDb.dbExtension;
+
+	this.obtainDossier = function (func) {
+		$http.get(dbPath)
+		.then(function (testimony) {
+			func(testimony.data);
+			$log.log('get data successfully. '+dbPath);
+		})
+		.catch(function (data, config, status) {
+			$log.log("sigSrevice error line -- 16 -\&\#1046\;- data : "+data+" config: "+config+" status: "+status+".---");
+		})
+		.finally(function () {
+			$log.log('sigSrevice line 19, finally method.');
+		});
+	};
+
+}]);*/
+(function () {
+	var ssM = angular.module('uibfv.sig.service');
+
+	// ssM
+
+})();
 // service js Document
 // $log.log("sigSrevice error line -- 15 --- data : "+data+" config: "+config+" status: "+status+".---");
 	/*sM.service('verifyNumStrObjArrUndefinedElem', ['$log', function($log){
@@ -1046,32 +1077,6 @@ cdM.directive('uibsDatepicker', [function(){
 	var sM = angular.module('uibfv.service');
 
 	// sM
-
-})();
-// service js Document
-// $log.log("sigSrevice error line -- 14 --- data : "+data+" config: "+config+" status: "+status+".---");
-/*sigM.service('inquireInfo', ['$http', '$log', 'appnameDb', function($http, $log, appnameDb){
-	var dbPath = appnameDb.dbDot+appnameDb.delimiter+appnameDb.dbPrefix+appnameDb.delimiter+appnameDb.dbName+appnameDb.dbExtension;
-
-	this.obtainDossier = function (func) {
-		$http.get(dbPath)
-		.then(function (testimony) {
-			func(testimony.data);
-			$log.log('get data successfully. '+dbPath);
-		})
-		.catch(function (data, config, status) {
-			$log.log("sigSrevice error line -- 16 -\&\#1046\;- data : "+data+" config: "+config+" status: "+status+".---");
-		})
-		.finally(function () {
-			$log.log('sigSrevice line 19, finally method.');
-		});
-	};
-
-}]);*/
-(function () {
-	var ssM = angular.module('uibfv.sig.service');
-
-	// ssM
 
 })();
 // jQuery Js Document

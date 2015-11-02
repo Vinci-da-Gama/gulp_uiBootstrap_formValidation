@@ -20,6 +20,11 @@
 			{title: "invalid form ($invalid)", content: "formName.inputFieldName.$invalid (return value: true/false -- true: if the input value is invalid, false if it is valid.)"},
 			{title: "Whether submit form ($submitted)", content: "formName.inputFieldName.$submitted (return value: true/false -- True if user has submitted the form even if its invalid.)"},
 			{title: "Collected All Validations in form ($error)", content: "formName.inputFieldName.$error (return value: true/false -- This object contains all of the validations on a particular form. If all of them is valid, then return true. Otherwise, return false.)"}];
+		$scope.fullTimel = new Date(1382086394000);
+		$scope.date = $scope.fullTimel.getDate();
+		$scope.month = $scope.fullTimel.getMonth();
+		$scope.year = $scope.fullTimel.getFullYear();
+		$scope.fullDate = $scope.date+"/"+$scope.month+"/"+$scope.year;
 	}]);
 	
 
